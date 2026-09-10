@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}لوحة المتابعة | مِلك{% endblock %}
+{% block content %}
+<section class="page">
+  <div class="heading">
+    <div><label>صباح الخير، أحمد</label><h1>نظرة عامة على محفظتك</h1><p>تابع أداء مشاريعك وحركة أموالك في مكان واحد.</p></div>
+    <a class="button" href="/admin/core/project/add/">＋　مشروع جديد</a>
+  </div>
+  <div class="stats">
+    <article><small>إجمالي المشاريع</small><b>{{ project_count }}</b><em>مشاريع تعمل بالتوازي</em></article>
+    <article><small>عدد المساهمين</small><b>{{ investor_count }}</b><em>حساب نشط</em></article>
+    <article><small>رأس المال المستثمر</small><b>{{ total_capital|floatformat:0 }} ر.ي</b><em>من المساهمات المسجلة</em></article>
+    <article><small>صافي الأرباح</small><b>{{ net_profit|floatformat:0 }} ر.ي</b><em>المبيعات ناقص التكاليف</em></article>
+  </div>
+  <div class="quick-actions">
+    <div><strong>ماذا تريد أن تفعل؟</strong><small>ابدأ العملية من هنا بخطوة واحدة.</small></div>
+    <a href="/admin/core/project/add/">＋ إضافة مشروع</a>
+    <a href="/admin/core/investor/add/">♙ إضافة مساهم</a>
+    <a href="/admin/core/expense/add/">▤ تسجيل مصروف</a>
+    <a href="/admin/core/sale/add/">◫ تسجيل بيع</a>
+  </div>
+  <div class="columns">
+    <section class="panel">
+      <div class="panel-title"><h2>المشاريع النشطة</h2><a href="{% url 'project_list' %}">عرض الكل ←</a></div>
+      {% for project in projects %}<div class="row"><div class="project-icon">⌂</div><div class="grow"><strong>{{ project.name }}</strong><small>{{ project.land.location }} · {{ project.get_status_display }}</small></div><b>{{ project.total_contributions|floatformat:0 }} ر.ي</b><span class="tag">{{ project.get_status_display }}</span></div>{% empty %}<p class="empty">لا توجد مشاريع بعد. أضف أول مشروع من لوحة الإدارة.</p>{% endfor %}
+    </section>
+    <section class="panel">
+      <div class="panel-title"><h2>آخر العمليات</h2><a href="{% url 'transaction_list' %}">السجل الكامل ←</a></div>
+      {% for transaction in transactions %}<div class="activity"><span>＋</span><div class="grow"><strong>{{ transaction.get_transaction_type_display }}{% if transaction.investor %} · {{ transaction.investor.name }}{% endif %}</strong><small>{% if transaction.project %}{{ transaction.project.name }} · {% endif %}{{ transaction.created_at|date:'d/m/Y H:i' }}</small></div><b>{{ transaction.amount|floatformat:0 }} ر.ي</b></div>{% empty %}<p class="empty">لا توجد عمليات مالية مسجلة.</p>{% endfor %}
+    </section>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}مِلك{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'core/app.css' %}?v=4">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><b>م</b><div><strong>مِلك</strong><small>استثمار عقاري بوضوح</small></div></div>
+      <div class="workspace"><span class="live-dot"></span><div><b>المحفظة الرئيسية</b><small>آخر مزامنة: الآن</small></div><span class="workspace-arrow">⌄</span></div>
+      <nav>
+        <span class="nav-heading">المساحة الرئيسية</span>
+        <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><i>⌂</i> لوحة المتابعة</a>
+        <a href="{% url 'project_list' %}" class="{% if request.resolver_match.url_name == 'project_list' %}active{% endif %}"><i>▦</i> المشاريع والعمارات</a>
+        <a href="{% url 'investor_list' %}" class="{% if request.resolver_match.url_name == 'investor_list' %}active{% endif %}"><i>♙</i> المساهمون</a>
+        <span class="nav-heading">المال والتقارير</span>
+        <a href="{% url 'transaction_list' %}" class="{% if request.resolver_match.url_name == 'transaction_list' %}active{% endif %}"><i>⇄</i> الحركة المالية</a>
+        <a href="/admin/"><i>⚙</i> لوحة الإدارة</a>
+      </nav>
+      <div class="sidebar-note"><span>✦</span><div><b>محفظتك تحت السيطرة</b><small>كل عملية محفوظة ومراجعة.</small></div></div>
+      <footer><div class="avatar">أ</div><div><b>{{ request.user.get_full_name|default:request.user.username }}</b><small>{% if request.user.is_staff %}مدير النظام{% else %}مستخدم مصرح{% endif %}</small></div><a class="logout-link" href="{% url 'logout' %}">خروج</a></footer>
+    </aside>
+    <main>
+      <header class="topbar"><div class="crumb"><span>المحفظة</span><b>/</b><strong>{% block page_name %}لوحة المتابعة{% endblock %}</strong></div><div class="topbar-actions"><span class="today">الثلاثاء، ١٧ سبتمبر ٢٠٢٤</span><button title="الإشعارات">♢<em></em></button><div class="top-avatar">أ</div></div></header>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>

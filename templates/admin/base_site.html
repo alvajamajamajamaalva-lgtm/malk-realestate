@@ -1,0 +1,6 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}{{ title }} | مِلك{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'admin/custom.css' %}?v=5">{% endblock %}
+{% block branding %}<a href="{% url 'admin:index' %}" class="admin-brand"><span>م</span><strong>مِلك</strong><small>إدارة الاستثمار العقاري</small></a>{% endblock %}
+{% block nav-global %}<div class="admin-shortcut"><a href="/">← العودة إلى لوحة المتابعة</a></div>{% endblock %}

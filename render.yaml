@@ -1,0 +1,26 @@
+databases:
+  - name: malk-database
+    databaseName: malk
+    user: malk
+    plan: free
+
+services:
+  - type: web
+    name: mohammedameein-realestate
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
+    startCommand: gunicorn config.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: 'false'
+      - key: DJANGO_ALLOWED_HOSTS
+        value: 'mohammedameein-realestate.com,www.mohammedameein-realestate.com,.onrender.com'
+      - key: DJANGO_CSRF_TRUSTED_ORIGINS
+        value: 'https://mohammedameein-realestate.com,https://www.mohammedameein-realestate.com'
+      - key: DATABASE_URL
+        fromDatabase:
+          name: malk-database
+          property: connectionString
