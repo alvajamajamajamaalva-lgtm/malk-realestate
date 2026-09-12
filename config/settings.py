@@ -37,6 +37,8 @@ ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', ','.join([
     'mohammedameein-realestate.com',
     'www.mohammedameein-realestate.com',
      '.trycloudflare.com',
+    '.up.railway.app',
+    '.railway.app',
 ])).split(',')
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
