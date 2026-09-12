@@ -36,6 +36,7 @@ ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', ','.join([
     '192.168.100.86',
     'mohammedameein-realestate.com',
     'www.mohammedameein-realestate.com',
+     '.trycloudflare.com',
 ])).split(',')
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
