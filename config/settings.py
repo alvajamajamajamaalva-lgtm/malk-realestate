@@ -40,6 +40,8 @@ ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', ','.join([
     '.up.railway.app',
     '.railway.app',
 ])).split(',')
+if any(key.startswith('RAILWAY_') for key in os.environ):
+    ALLOWED_HOSTS.append('*')
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
